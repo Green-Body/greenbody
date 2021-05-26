@@ -125,7 +125,21 @@ router.post('/deleteMyLog',(req,res)=>{
     } else {
         res.json({isLogined: false});
     }
-})
+});
+
+router.post('/getMyScore',(req,res)=>{
+    if (req.session.userid){
+        models.member.findOne({
+            raw : true,
+            attributes : ['score'],
+            where : {user_id : req.session.userid}
+        }).then((value)=>{
+            res.json({score : value.score});
+        })
+    } else {
+        res.json({isLogined: false});
+    }
+});
 
 async function login(id,password){
     const data = await models.member.count({
@@ -171,7 +185,6 @@ async function signup(id,nickname,password){
 
     return 0;
 }
-
 async function getMyInfo(id){
     const data = await models.member.findOne({
         attributes: ['age','gender','smoking_period','smoking_start_age','disease'],
