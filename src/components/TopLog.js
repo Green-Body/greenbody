@@ -10,7 +10,7 @@ function TopLog(props) {
                 <Link to='/myPage' className="menu" id="myPage">MyPage</Link>
                 <Link to='/myLog' className="menu menuOn" id="MyLog">MyLog</Link>
                 <Link to='/community' className="menu" id="Community">Community</Link>
-                <Link to='' className="menu" id="Logout">Logout</Link>
+                <a href='/api/logout' className="menu" id="Logout">Logout</a>
             </div>
         </div>
     )

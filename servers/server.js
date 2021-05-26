@@ -4,6 +4,15 @@ const bodyParser = require('body-parser');
 const port =process.env.PORT || 3001;
 const route = require('../routes/api');
 const session = require('express-session');	//세션관리용 미들웨어
+const models = require("../models/index.js");
+
+models.sequelize.sync().then( () => {
+  console.log(" DB 연결 성공");
+}).catch(err => {
+  console.log("연결 실패");
+  console.log(err);
+})
+
 
 app.use(session({
   httpOnly: true,	//자바스크립트를 통해 세션 쿠키를 사용할 수 없도록 함

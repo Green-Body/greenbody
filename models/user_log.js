@@ -4,7 +4,8 @@ module.exports = function(sequelize, DataTypes) {
     id: {
       type: DataTypes.BIGINT,
       allowNull: false,
-      primaryKey: true
+      primaryKey: true,
+      autoIncrement: true
     },
     amount: {
       type: DataTypes.STRING(255),
@@ -12,7 +13,8 @@ module.exports = function(sequelize, DataTypes) {
     },
     date: {
       type: DataTypes.DATEONLY,
-      allowNull: true
+      defaultValue: Sequelize.NOW,
+      allowNull: false
     },
     inhalation: {
       type: DataTypes.STRING(255),

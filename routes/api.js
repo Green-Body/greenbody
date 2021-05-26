@@ -31,7 +31,7 @@ router.post('/signup',(req,res)=>{
             } else if (code == -2){
                 res.send('NICKNAME이 이미 존재합니다');
             }
-        })
+        }).catch((err)=>{console.log(err)})
     })
 });
 
@@ -55,7 +55,26 @@ router.post('/getMyInfo',(req,res)=>{
         });
     } else {
         res.json({isLogined: false});
-        
+    }
+});
+
+router.post('/setMyInfo',(req,res)=>{
+    if (req.session.userid){
+        const {age,gender,disease,term,startAge} = req.body;
+        setMyInfo(req.session.userid,req.body).then(()=>{
+            res.json({isLogined:true,status:"success"});
+        });
+    } else {
+        res.json({isLogined: false});
+    }
+});
+
+router.post('/getMylogList',(req,res)=>{
+    if (req.session.userid){
+
+        res.json()
+    } else {
+        res.json({isLogined: false});
     }
 });
 
@@ -112,5 +131,18 @@ async function getMyInfo(id){
 
     return data.dataValues;
 }
+
+async function setMyInfo(id,data){
+    await models.member.update({
+        where : {user_id : id}
+    },{
+        age : data.age,
+        gender : data.gender,
+        smoking_period : data.term,
+        smoking_start_age : data.startAge,
+        disease : data.disease
+    });
+}
+
 
 module.exports = router;

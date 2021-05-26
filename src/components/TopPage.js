@@ -10,7 +10,7 @@ function TopPage(props) {
                 <Link to='/myPage' className="menu menuOn" id="myPage">MyPage</Link>
                 <Link to='/myLog' className="menu" id="MyLog">MyLog</Link>
                 <Link to='/community' className="menu" id="Community">Community</Link>
-                <Link to='' className="menu" id="Logout">Logout</Link>
+                <a href='/api/logout' className="menu" id="Logout">Logout</a>
             </div>
         </div>
     )
