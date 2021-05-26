@@ -376,15 +376,17 @@ class Content extends Component {
     }
 
     handleClick(e){
+        console.log(this.state);
         fetch("/api/setMyInfo",{
-            method: "POST",
-            body: {
-                "age": this.state.age,
-                "gender": this.state.gender,
-                "term": this.state.term,
-                "startAge": this.state.startAge,
-                "disease": this.diseaseStr    
-            }
+            method: "post",
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            body: new URLSearchParams({
+                "age": this.state.info.age,
+                "gender": this.state.info.gender,
+                "term": this.state.info.term,
+                "startAge": this.state.info.startAge,
+                "disease": this.state.info.disease.join(',')    
+            })
         })
     }
 

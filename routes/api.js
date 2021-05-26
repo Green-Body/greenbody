@@ -1,7 +1,12 @@
 const express = require('express');
+const app = express();
 const router = express.Router();
 const bcrypt = require('bcrypt');
 var models = require('../models');
+const bodyParser = require('body-parser');
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended : true}));
 
 router.get('/', (req, res)=>res.json({state:'ON'}));
 
@@ -66,6 +71,7 @@ router.post('/getMyInfo',(req,res)=>{
 
 router.post('/setMyInfo',(req,res)=>{
     if (req.session.userid){
+        console.log(req);
         const {age,gender,disease,term,startAge} = req.body;
         setMyInfo(req.session.userid,req.body).then(()=>{
             res.json({status:"success"});
@@ -237,14 +243,14 @@ async function addMyLog(userid,data){
 
 async function updateMyLog(userid,data){
     await models.user_log.update({
+        amount: data.smoke_amount,
+        inhalation: data.smoke_degree,
+        type: data.smoke_type
+    },{
         where : {
             user_id : userid,
             id: data.id
         }
-    },{
-        amount: data.smoke_amount,
-        inhalation: data.smoke_degree,
-        type: data.smoke_type
     });
 }
 
