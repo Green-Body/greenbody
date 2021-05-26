@@ -196,14 +196,14 @@ async function getMyInfo(id){
 
 async function setMyInfo(id,data){
     await models.member.update({
-        where : {user_id : id}
-    },{
         age : data.age,
         gender : data.gender,
         smoking_period : data.term,
         smoking_start_age : data.startAge,
         disease : data.disease
-    });
+    },{
+        where : {user_id : id}
+    }).catch(console.log);
 }
 
 async function getMyLogList(id){

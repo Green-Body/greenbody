@@ -378,11 +378,13 @@ class Content extends Component {
     handleClick(e){
         fetch("/api/setMyInfo",{
             method: "POST",
-            "age": this.state.age,
-            "gender": this.state.gender,
-            "term": this.state.term,
-            "startAge": this.state.startAge,
-            "disease": this.diseaseStr
+            body: {
+                "age": this.state.age,
+                "gender": this.state.gender,
+                "term": this.state.term,
+                "startAge": this.state.startAge,
+                "disease": this.diseaseStr    
+            }
         })
     }
 
