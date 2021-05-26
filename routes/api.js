@@ -35,6 +35,11 @@ router.post('/signup',(req,res)=>{
     })
 });
 
+router.get('/logout',(req,res)=>{
+    req.session.destroy();
+    res.redirect('/')
+})
+
 router.post('/getMyInfo',(req,res)=>{
     if (req.session.userid){
         getMyInfo(req.session.userid).then((result)=>{

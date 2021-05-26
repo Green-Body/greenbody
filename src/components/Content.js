@@ -242,10 +242,6 @@ function QnA(props){
 class Content extends Component {
     constructor(props){
         super(props);
-        fetch("/api/getMyInfo",{
-            method: "POST"
-        }).then(response=>response.json())
-            .then(response=>console.log(response));
         this.state = {
             visible: 1,
             info: {
@@ -256,6 +252,10 @@ class Content extends Component {
                 disease: []
             }
         }
+        fetch("/api/getMyInfo",{
+            method: "POST"
+        }).then(response=>response.json())
+            .then(response=>console.log(response));
         this.changeVisible = this.changeVisible.bind(this);
         this.handleRadio = this.handleRadio.bind(this);
         this.handleChecked = this.handleChecked.bind(this);
