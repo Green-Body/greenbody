@@ -379,6 +379,10 @@ class Content extends Component {
         fetch("/api/setMyInfo",{
             method: "POST",
             "age": this.state.age,
+            "gender": this.state.gender,
+            "term": this.state.term,
+            "startAge": this.state.startAge,
+            "disease": this.diseaseStr
         })
     }
 
