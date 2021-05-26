@@ -309,7 +309,7 @@ class Content extends Component {
 
     renderButton(){
         if(this.state.visible === 0){
-            return <button onClick={this.changeVisible.bind(this, 1), this.handleClick.bind(this)} type="button" class="btn_info_edit">확인</button>;
+            return <button onClick={this.handleClick.bind(this), this.changeVisible.bind(this, 1)} type="button" class="btn_info_edit">확인</button>;
         }
         else if(this.state.visible === 1){
             return <button onClick={this.changeVisible.bind(this, 0)} type="button" class="btn_info_edit">수정</button>;

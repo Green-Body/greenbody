@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 var thi = '';
 var audit = '';
@@ -76,34 +77,13 @@ class MyLog extends Component {
         super(props);
         this.state = {
             visible: 1,
-            log: [
-                {
-                    date: '2021-05-19',
-                    smoke_type: '',
-                    smoke_degree: '',
-                    smoke_amount: '',
-                },
-                {
-                    date: '2021-05-20',
-                    smoke_type: '',
-                    smoke_degree: '',
-                    smoke_amount: '',
-                },
-                {
-                    date: '2021-05-21',
-                    smoke_type: '',
-                    smoke_degree: '',
-                    smoke_amount: '',
-                },
-                {
-                    date: '2021-05-22',
-                    smoke_type: '',
-                    smoke_degree: '',
-                    smoke_amount: '',
-                },
-            ],
+            log: [],
             selectedLog: 0,
         }
+        fetch("/api/getMyLogList",{
+            method: "POST"
+        }).then(response=>response.json())
+            .then(response=>console.log(response));
         this.handleLogButton = this.handleLogButton.bind(this);
         this.changeVisible = this.changeVisible.bind(this);
         this.handleRadio = this.handleRadio.bind(this);
