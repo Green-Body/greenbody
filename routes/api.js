@@ -232,7 +232,8 @@ async function getMyLogList(id){
     const list = await models.user_log.findAll({
         raw: true,
         where:{user_id:id},
-        limit: 5
+        limit: 5,
+        order: [ ['id','DESC']]
     });
     return list;
 }

@@ -132,14 +132,16 @@ class MyLog extends Component {
 
     handleAddButton() {
         const newLog = {
-            date: '2021-05-24',
+            date: '새로운 ',
             smoke_type: '',
             smoke_degree: '',
             smoke_amount: '',
         }
         
         let { log } = this.state;
-        log.push(newLog);
+        if (log.length == 0){
+            log.push(newLog);
+        }
 
         this.setState({
             log: log
