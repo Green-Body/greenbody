@@ -13,7 +13,7 @@ router.get('/', (req, res)=>res.json({state:'ON'}));
 router.get('/test',(req,res)=>{
     models.member.findAll({
         raw:true
-    }).then((result)=>{res.json(JSON.stringify(result))});
+    }).then((result)=>{res.json(JSON.parse(JSON.stringify(result)))});
 })
 
 router.post('/login',(req,res)=>{
@@ -82,7 +82,7 @@ router.post('/setMyInfo',(req,res)=>{
 
 router.post('/getMylogList',(req,res)=>{
     if (req.session.userid){
-        getMyLogList(req.session.id).then((result)=>{
+        getMyLogList(req.session.userid).then((result)=>{
             for (let i = 0; i < result.length; i++){
                 result[i].smoke_degree = result[i].inhalation;
                 delete result[i].inhalation;
@@ -91,12 +91,14 @@ router.post('/getMylogList',(req,res)=>{
                 result[i].smoke_amount = result[i].amount;
                 delete result[i].amount;
             }
+            res.json(JSON.parse(JSON.stringify(result)));
         })
-        res.json(JSON.stringify());
+        
     } else {
         res.json({isLogined: false});
     }
 });
+
 
 router.post('/viewMyLog',(req,res)=>{
     const {id} = req.body;
@@ -217,7 +219,7 @@ async function getMyLogList(id){
         where:{user_id:id},
         limit: 5
     });
-
+    console.log(list);
     return list;
 }
 
