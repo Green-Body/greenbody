@@ -27,7 +27,7 @@ router.post('/login',(req,res)=>{
         } else {
             res.send('비밀번호가 다릅니다');
         }
-    })
+    }).catch(console.log);
 });
 
 router.post('/signup',(req,res)=>{
@@ -99,6 +99,14 @@ router.post('/getMylogList',(req,res)=>{
     }
 });
 
+router.get('/makelog',(req,res)=>{
+    models.user_log.create({
+        user_id: "test",
+        amount: "1-9개비",
+        inhalation: "얕게 흡입",
+        type: "연초"
+    })
+})
 
 router.post('/viewMyLog',(req,res)=>{
     const {id} = req.body;
@@ -112,14 +120,6 @@ router.post('/viewMyLog',(req,res)=>{
 router.post('/addMyLog',(req,res)=>{
     if (req.session.userid){
         addMyLog(req.session.userid,req.body);
-    } else {
-        res.json({isLogined: false});
-    }
-});
-
-router.post('/updateMyLog',(req,res)=>{
-    if (req.session.userid){
-        updateMyLog(req.session.userid,req.body);
     } else {
         res.json({isLogined: false});
     }
