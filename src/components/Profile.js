@@ -1,5 +1,12 @@
 import React, { Component } from 'react';
 import { Bar } from 'react-chartjs-2';
+import character_on from '../img/character_on.png';
+import character_off from '../img/character_off.png';
+import graph_on from '../img/graph_on.png';
+import graph_off from '../img/graph_off.png';
+import character_good from '../img/character_good.png?v=1';
+import character_bad from '../img/character_bad.png?v=1';
+import character_soso from '../img/character_soso.png?v=1';
 
 const options = {
     legend: {
@@ -32,11 +39,72 @@ const data = {
     ]
 };
 
-function Profile(props) {
-    return (
-        <div className="profile">
-            <div className="profile_tit"><span className="nick">User1</span>'s body profile</div>
-            <div className="profile_graph_wrap">
+class Profile extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            visible: 0,
+            info: {
+                age: '',
+                gender: '',
+                startAge: '',
+                term: '',
+                disease: [],
+                diseaseStr: '',
+            }
+        }
+        fetch("/api/getMyInfo",{
+            method: "POST"
+        }).then(response=>response.json())
+            .then(json => {
+                this.setState({
+                    info: {
+                        age: json.age,
+                        gender: json.gender,
+                        startAge: json.smoking_start_age,
+                        term: json.smoking_period,
+                        disease: [],
+                        diseaseStr: json.disease,
+                    }
+                })
+            })
+        this.changeVisible = this.changeVisible.bind(this);
+    } 
+
+    changeVisible(number){
+        this.setState({
+            visible: number
+        })
+    }
+
+    renderContent(){
+        const { info } = this.state;
+        if(this.state.visible === 0){
+            let level = 0;
+            if(level < 3){
+                return (
+                    <div className="profile_graph">
+                        <img src={character_good} alt="good" className="img_base"/>
+                    </div>
+                )
+            }
+            else if(level < 7){
+                return (
+                    <div className="profile_graph">
+                        <img src={character_soso} alt="soso" className="img_base"/>
+                    </div>
+                )
+            }
+            else{
+                return (
+                    <div className="profile_graph">
+                        <img src={character_bad} alt="bad" className="img_base"/>
+                    </div>
+                )
+            }
+        }
+        else if(this.state.visible === 1){
+            return (
                 <Bar className="profile_graph"
                     data={data}
                     options={options}
@@ -49,9 +117,28 @@ function Profile(props) {
                         }
                     }}
                 />
+            )
+        }
+    }
+
+    render(){
+        return (
+            <div className="profile">
+                <div className="profile_tit"><span className="nick">User1</span>'s body profile</div>
+                <div className="profile_graph_wrap">
+                    <button type="button" className={"profile_graph_btn profile_graph_btn_now graph"+(this.state.visible == 0? "On" : "Off")}>
+                        <img onClick={this.changeVisible.bind(this, 0)} src={character_off} alt="Now" className="img_base"/>
+                        <img onClick={this.changeVisible.bind(this, 0)} src={character_on} alt="Now" className="img_cover"/>
+                    </button>
+                    <button type="button" className={"profile_graph_btn profile_graph_btn_before graph"+(this.state.visible == 1? "On" : "Off")}>
+                        <img onClick={this.changeVisible.bind(this, 1)} src={graph_off} alt="Now" className="img_base"/>
+                        <img onClick={this.changeVisible.bind(this, 1)} src={graph_on} alt="Now" className="img_cover"/>
+                    </button>
+                    {this.renderContent()}
+                </div>
             </div>
-        </div>
-    )
+        )
+    }
 }
 
 export default Profile;

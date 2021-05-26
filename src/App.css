@@ -192,21 +192,21 @@ a:link, a:visited { color: #000;}
             display: block;
             width: 100%;
             position: relative;
-            padding-top: 100%;
+            padding-top: 88%;
         }
         .profile_graph_btn {
             display: block;
             position: absolute;
-            left:4.5%;
+            top: 0;
             z-index: 2;
         }
             .profile_graph_btn_now {
-                width: 20.8%;
-                top: 0;
+                width: 35.1851851852%;
+                left:4.5%;
             }
             .profile_graph_btn_before {
-                width: 26.4%;
-                top: 8%;
+                width: 25%;
+                left:45%;
             }
             .profile_graph_btn .img_cover {
                 opacity: 0;
@@ -217,11 +217,14 @@ a:link, a:visited { color: #000;}
         .profile_graph {
             display: block;
             width: 100%;
-            width: 100%;
             position: absolute;
             left: 0;
-            top: 0;
+            bottom: 0;
         }
+            .profile_graph img {
+                width: 80%;
+                margin: 0 auto;
+            }
 
 .info_wrap {
     display: inline-block;
