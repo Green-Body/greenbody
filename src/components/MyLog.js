@@ -80,10 +80,11 @@ class MyLog extends Component {
             log: [],
             selectedLog: 0,
         }
-        fetch("/api/getMyLogList",{
-            method: "POST"
-        }).then(response=>response.json())
-            .then(response=>console.log(response));
+        axios({
+            method: "POST",
+            url: "/api/getMyLogList",
+        }).then(res => {console.log(res);})
+            .catch(error => {console.log(error);})
         this.handleLogButton = this.handleLogButton.bind(this);
         this.changeVisible = this.changeVisible.bind(this);
         this.handleRadio = this.handleRadio.bind(this);
