@@ -7,6 +7,10 @@ import lnb3 from '../img/lnb3.png';
 
 function Adit(props){
     console.log(props.info)
+    fetch("/api/getMyInfo",{
+        method: "POST"
+    }).then(response=>response.json())
+        .then(response=>console.log(response));
     return (
         <ul>
             <li><strong>나이 :</strong> 
@@ -192,17 +196,23 @@ function Adit(props){
 }
 
 function Info(props){
-    const diseases = props.info.disease.map(item => {
-       return <span id="outputDisease">{item},  </span>
-    })
-    console.log(diseases)
+    // const diseases = props.info.disease.map(item => {
+    //    return <span id="outputDisease">{item},  </span>
+    // })
+    if(props.info.disease.length !== 0){
+        props.info.diseaseStr = props.info.disease.map(item => {
+            return item+", "
+        })
+    }
+
+    //console.log(diseases)
     return (
         <ul>
             <li><strong>나이 :</strong> <span id="outputAge">{props.info.age}</span></li>
             <li><strong>성별 :</strong> <span id="outputGender">{props.info.gender}</span></li>
             <li><strong>흡연 시작 연령 :</strong> <span id="outputStartAge">{props.info.startAge}</span></li>
             <li><strong>흡연 기간 :</strong> <span id="outputTerm">{props.info.term}</span></li>
-            <li><strong>기저질환 :</strong> {diseases}</li>
+            <li><strong>기저질환 :</strong> <span>{props.info.diseaseStr}</span></li>
         </ul>
     )
 }
@@ -249,12 +259,25 @@ class Content extends Component {
                 gender: '',
                 startAge: '',
                 term: '',
-                disease: []
+                disease: [],
+                diseaseStr: '',
             }
         }
         fetch("/api/getMyInfo",{
             method: "POST"
         }).then(response=>response.json())
+            .then(json => {
+                this.setState({
+                    info: {
+                        age: json.age,
+                        gender: json.gender,
+                        startAge: json.smoking_start_age,
+                        term: json.smoking_period,
+                        disease: [],
+                        diseaseStr: json.disease,
+                    }
+                })
+            })
             .then(response=>console.log(response));
         this.changeVisible = this.changeVisible.bind(this);
         this.handleRadio = this.handleRadio.bind(this);
@@ -349,6 +372,15 @@ class Content extends Component {
                 age: value,
             }
         }))
+
+        fetch("/api/getMyInfo",{
+            method: "POST",
+            //age: this.state.age,
+            body: JSON.stringify({
+                "age": this.state.age,    
+            })
+        }).then(response=>response.json())
+            .then(response=>console.log(response));
     }
 
     render(){
