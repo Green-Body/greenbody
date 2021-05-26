@@ -7,10 +7,6 @@ import lnb3 from '../img/lnb3.png';
 
 function Adit(props){
     console.log(props.info)
-    fetch("/api/getMyInfo",{
-        method: "POST"
-    }).then(response=>response.json())
-        .then(response=>console.log(response));
     return (
         <ul>
             <li><strong>나이 :</strong> 

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { json } from 'body-parser';
 
 var thi = '';
 var audit = '';
@@ -80,11 +81,10 @@ class MyLog extends Component {
             log: [],
             selectedLog: 0,
         }
-        axios({
-            method: "POST",
-            url: "/api/getMyLogList",
-        }).then(res => {console.log(res);})
-            .catch(error => {console.log(error);})
+        fetch("/api/getMyLogList",{
+            method: "POST"
+        }).then(response=>console.log(response.body));
+
         this.handleLogButton = this.handleLogButton.bind(this);
         this.changeVisible = this.changeVisible.bind(this);
         this.handleRadio = this.handleRadio.bind(this);
