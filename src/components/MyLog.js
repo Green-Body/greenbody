@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import axios from 'axios';
-import { json } from 'body-parser';
 
 var thi = '';
 var audit = '';
@@ -47,7 +45,8 @@ function Adit(props){
                                 onChange={props.handleRadio}/> 
                         얕게 흡입 </label>
                     </li>
-                    <li><strong>일일 평균 흡연량 :</strong>
+                    <li><strong>일일 흡연량 :</strong>
+                        <label><input type="radio" name="smoke_amount" value="흡연 안함" checked={props.adit.smoke_amount === "흡연 안함"} onChange={props.handleRadio}/> 흡연 안함 </label>
                         <label><input type="radio" name="smoke_amount" value="1-9개비" checked={props.adit.smoke_amount === "1-9개비"} onChange={props.handleRadio}/> 1-9개비 </label>
                         <label><input type="radio" name="smoke_amount" value="10-19개비" checked={props.adit.smoke_amount === "10-19개비"} onChange={props.handleRadio}/> 10-19개비 </label>
                         <label><input type="radio" name="smoke_amount" value="20개비 이상" checked={props.adit.smoke_amount === "20개비 이상"} onChange={props.handleRadio}/> 20개비 이상 </label>
@@ -66,7 +65,7 @@ function Info(props){
                 <ul>
                     <li><strong>담배 종류 :</strong> <span id="outputChoice"> {props.adit.smoke_type} </span></li>
                     <li><strong>담배 연기 흡입 정도 :</strong> <span id="outputDegree"> {props.adit.smoke_degree} </span></li>
-                    <li><strong>일일 평균 흡연량 :</strong> <span id="outputAmount"> {props.adit.smoke_amount} </span></li>
+                    <li><strong>일일 흡연량 :</strong> <span id="outputAmount"> {props.adit.smoke_amount} </span></li>
                 </ul>
             </div>
         </div>
@@ -85,9 +84,11 @@ class MyLog extends Component {
             method: "POST"
         }).then(response=>response.json())
         .then(response=>{
-            this.setState({
-                log:response
-            })
+            if(response.length !== 0){
+                this.setState({
+                    log:response
+                })
+            }
         });
 
         this.handleLogButton = this.handleLogButton.bind(this);
@@ -172,8 +173,7 @@ class MyLog extends Component {
                 </div>
             )
         }
-        else return <div><button onClick={this.changeVisible.bind(this, 0)} type="button" className="btn_info_edit btn_mylog_edit">수정</button>
-                        <button type="button" className="btn_info_edit btn_mylog_delete">삭제</button></div>
+        else return <div><button type="button" className="btn_info_edit btn_mylog_delete">삭제</button></div>
     }
 
     renderLogList(){
