@@ -5,6 +5,12 @@ var models = require('../models');
 
 router.get('/', (req, res)=>res.json({state:'ON'}));
 
+router.get('/test',(req,res)=>{
+    models.member.findAll({
+        raw:true
+    }).then((result)=>{res.json(JSON.stringify(result))});
+})
+
 router.post('/login',(req,res)=>{
     const {userid, password} = req.body;
     login(userid,password).then((result)=>{
@@ -62,7 +68,7 @@ router.post('/setMyInfo',(req,res)=>{
     if (req.session.userid){
         const {age,gender,disease,term,startAge} = req.body;
         setMyInfo(req.session.userid,req.body).then(()=>{
-            res.json({isLogined:true,status:"success"});
+            res.json({status:"success"});
         });
     } else {
         res.json({isLogined: false});
@@ -71,12 +77,55 @@ router.post('/setMyInfo',(req,res)=>{
 
 router.post('/getMylogList',(req,res)=>{
     if (req.session.userid){
-
-        res.json()
+        getMyLogList(req.session.id).then((result)=>{
+            for (let i = 0; i < result.length; i++){
+                result[i].smoke_degree = result[i].inhalation;
+                delete result[i].inhalation;
+                result[i].smoke_type = result[i].type;
+                delete result[i].type;
+                result[i].smoke_amount = result[i].amount;
+                delete result[i].amount;
+            }
+        })
+        res.json(JSON.stringify());
     } else {
         res.json({isLogined: false});
     }
 });
+
+router.post('/viewMyLog',(req,res)=>{
+    const {id} = req.body;
+    if (req.session.userid){
+        res.json(JSON.stringify(viewMyLog(req.session.userid,id)));
+    } else {
+        res.json({isLogined: false});
+    }
+});
+
+router.post('/addMyLog',(req,res)=>{
+    if (req.session.userid){
+        addMyLog(req.session.userid,req.body);
+    } else {
+        res.json({isLogined: false});
+    }
+});
+
+router.post('/updateMyLog',(req,res)=>{
+    if (req.session.userid){
+        updateMyLog(req.session.userid,req.body);
+    } else {
+        res.json({isLogined: false});
+    }
+});
+
+router.post('/deleteMyLog',(req,res)=>{
+    if (req.session.userid){
+        id = req.body.id;
+        deleteMyLog(req.session.userid,id);
+    } else {
+        res.json({isLogined: false});
+    }
+})
 
 async function login(id,password){
     const data = await models.member.count({
@@ -144,5 +193,55 @@ async function setMyInfo(id,data){
     });
 }
 
+async function getMyLogList(id){
+    const list = await models.user_log.findAll({
+        raw: true,
+        where:{user_id:id},
+        limit: 5
+    });
+
+    return list;
+}
+
+async function viewMyLog(userid,id){
+    return models.user_log.findOne({
+        raw: true,
+        where : {
+            id: id,
+            user_id : userid
+        }
+    });
+}
+
+async function addMyLog(userid,data){
+    await models.user_log.create({
+        user_id: userid,
+        amount: data.amount,
+        inhalation: data.inhalation,
+        type: data.type
+    })
+}
+
+async function updateMyLog(userid,data){
+    await models.user_log.update({
+        where : {
+            user_id : userid,
+            id: data.id
+        }
+    },{
+        amount: data.smoke_amount,
+        inhalation: data.smoke_degree,
+        type: data.smoke_type
+    });
+}
+
+async function deleteMyLog(userid,id){
+    await models.user_log.destroy({
+        where : {
+            user_id : userid,
+            id : id
+        }
+    });
+}
 
 module.exports = router;
