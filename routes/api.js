@@ -5,17 +5,46 @@ const bcrypt = require('bcrypt');
 var models = require('../models');
 const bodyParser = require('body-parser');
 const { Sequelize } = require('../models');
+const Op = Sequelize.Op;
+const cron = require('node-cron');
+const moment = require('moment');
+moment().format("YYYY-MM-DD");
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended : true}));
 
 router.get('/', (req, res)=>res.json({state:'ON'}));
 
-router.get('/test',(req,res)=>{
-    models.member.findAll({
-        raw:true
-    }).then((result)=>{res.json(JSON.parse(JSON.stringify(result)))});
-})
+cron.schedule('* 0 * * *',()=>{
+    models.user_log.findAll({
+        raw: true,
+        attributes:['user_id'],
+        where:{ 
+            date:{
+                [Op.notIn] : [moment().subtract('1','d').toDate()]
+            }
+        }
+    }).then((data)=>{
+        userSet = new Set();
+        for (let i=0; i < data.length; i++){
+            userSet.add(data[i].user_id);
+        }
+        userArr = Array.from(userSet);
+
+        models.member.decrement({
+            score : 30
+        },{
+            where:{
+                user_id:{
+                    [Op.in] : userArr
+                },
+                score:{
+                    [Op.gte] : 30
+                }
+            }
+        })
+    });
+});
 
 router.post('/login',(req,res)=>{
     const {userid, password} = req.body;
@@ -103,7 +132,9 @@ router.post('/getMylogList',(req,res)=>{
 
 router.post('/addMyLog',(req,res)=>{
     if (req.session.userid){
-        addMyLog(req.session.userid,req.body);
+        addMyLog(req.session.userid,req.body).then((addScore)=>{
+            res.json({addedScore : addScore});
+        });
     } else {
         res.json({isLogined: false});
     }
@@ -232,12 +263,14 @@ async function addMyLog(userid,data){
     }
 
     if (addScore > 0){
-        await models.member.update({
-            score : Sequelize.literal('SCORE + '+addScore)
+        await models.member.increment({
+            score : addScore
         },{
             where : {user_id: userid}
         });
     }
+
+    return addScore;
 }
 
 async function deleteMyLog(userid,id){
