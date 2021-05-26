@@ -7,6 +7,7 @@ import graph_off from '../img/graph_off.png';
 import character_good from '../img/character_good.png?v=1';
 import character_bad from '../img/character_bad.png?v=1';
 import character_soso from '../img/character_soso.png?v=1';
+import { json } from 'body-parser';
 
 const options = {
     legend: {
@@ -44,28 +45,14 @@ class Profile extends Component {
         super(props);
         this.state = {
             visible: 0,
-            info: {
-                age: '',
-                gender: '',
-                startAge: '',
-                term: '',
-                disease: [],
-                diseaseStr: '',
-            }
+            score: 0,
         }
-        fetch("/api/getMyInfo",{
+        fetch("/api/getMyScore",{
             method: "POST"
         }).then(response=>response.json())
             .then(json => {
                 this.setState({
-                    info: {
-                        age: json.age,
-                        gender: json.gender,
-                        startAge: json.smoking_start_age,
-                        term: json.smoking_period,
-                        disease: [],
-                        diseaseStr: json.disease,
-                    }
+                    score: json.score,
                 })
             })
         this.changeVisible = this.changeVisible.bind(this);
@@ -78,17 +65,16 @@ class Profile extends Component {
     }
 
     renderContent(){
-        const { info } = this.state;
         if(this.state.visible === 0){
             let level = 0;
-            if(level < 3){
+            if(this.state.score >= 300){
                 return (
                     <div className="profile_graph">
                         <img src={character_good} alt="good" className="img_base"/>
                     </div>
                 )
             }
-            else if(level < 7){
+            else if(this.state.score >= 100){
                 return (
                     <div className="profile_graph">
                         <img src={character_soso} alt="soso" className="img_base"/>
@@ -136,6 +122,7 @@ class Profile extends Component {
                     </button>
                     {this.renderContent()}
                 </div>
+                    <p><strong>점수: </strong>{this.state.score}</p>
             </div>
         )
     }
