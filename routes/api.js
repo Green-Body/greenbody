@@ -71,7 +71,6 @@ router.post('/getMyInfo',(req,res)=>{
 
 router.post('/setMyInfo',(req,res)=>{
     if (req.session.userid){
-        console.log(req);
         const {age,gender,disease,term,startAge} = req.body;
         setMyInfo(req.session.userid,req.body).then(()=>{
             res.json({status:"success"});

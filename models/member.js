@@ -24,11 +24,11 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     },
     smoking_period: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING(255),
       allowNull: true
     },
     smoking_start_age: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING(255),
       allowNull: true
     },
     user_id: {
