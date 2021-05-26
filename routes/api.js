@@ -4,6 +4,7 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 var models = require('../models');
 const bodyParser = require('body-parser');
+const { Sequelize } = require('../models');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended : true}));
@@ -48,7 +49,8 @@ router.post('/signup',(req,res)=>{
 
 router.get('/logout',(req,res)=>{
     req.session.destroy();
-    res.redirect(req.baseUrl);
+    // 임시로 절대경로 사용
+    res.redirect('http://localhost:3000');
 })
 
 router.post('/getMyInfo',(req,res)=>{
@@ -94,15 +96,6 @@ router.post('/getMylogList',(req,res)=>{
             res.json(JSON.parse(JSON.stringify(result)));
         })
         
-    } else {
-        res.json({isLogined: false});
-    }
-});
-
-router.post('/viewMyLog',(req,res)=>{
-    const {id} = req.body;
-    if (req.session.userid){
-        res.json(JSON.stringify(viewMyLog(req.session.userid,id)));
     } else {
         res.json({isLogined: false});
     }
@@ -210,18 +203,7 @@ async function getMyLogList(id){
         where:{user_id:id},
         limit: 5
     });
-    console.log(list);
     return list;
-}
-
-async function viewMyLog(userid,id){
-    return models.user_log.findOne({
-        raw: true,
-        where : {
-            id: id,
-            user_id : userid
-        }
-    });
 }
 
 async function addMyLog(userid,data){
@@ -237,24 +219,25 @@ async function addMyLog(userid,data){
         addScore += 10;
     } else if (data.amount == "10-19개비"){
         addScore += 5;
+    } else if (data.amount == "흡연 안함"){
+        addScore += 40;
     }
 
     if (data.type == "전자 담배"){
-        addScore += 10
+        addScore += 10;
     }
-}
 
-async function updateMyLog(userid,data){
-    await models.user_log.update({
-        amount: data.smoke_amount,
-        inhalation: data.smoke_degree,
-        type: data.smoke_type
-    },{
-        where : {
-            user_id : userid,
-            id: data.id
-        }
-    });
+    if (data.inhalation == "얕게 흡입"){
+        addScore += 10;
+    }
+
+    if (addScore > 0){
+        await models.member.update({
+            score : Sequelize.literal('SCORE + '+addScore)
+        },{
+            where : {user_id: userid}
+        });
+    }
 }
 
 async function deleteMyLog(userid,id){
