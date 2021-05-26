@@ -1,0 +1,566 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+.test{
+    z-index: 2;
+}
+input {
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+button {
+    padding: 0;
+    margin: 0;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}
+a { text-decoration: none; }
+a:link, a:visited { color: #000;}
+.img_base {
+    display: block;
+    width: 100%;
+    position: relative;
+}
+.img_cover {
+    display: block;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.firstPage {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    background-image: url('img/firstPage.jpg');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+}
+    .header {
+        width: 100%;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        padding-left: 14%;
+        box-sizing: border-box;
+    }
+        .header h1 {
+            width: 26.5vw;
+            max-width: 509px;
+        }
+        .header p {
+            color: #C8E6C9;
+            font-size: 30px;
+        }
+
+    .loginBox, .joinBox {
+        width:39%;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        padding: 40px 0;
+        transform: translateY(-50%);
+        text-align: center;
+        border-radius: 15px;
+        box-shadow: 1px 1px 7px gray;
+        background-color: #c8e6c9b1;
+    }
+        .form_tit {
+            font-size: 32px;
+            font-weight: bold;
+        }
+        .formLogin {
+            display: block;
+            width: 76%;
+            height: 50px;
+            margin: 22px auto;
+            color: #E8F5E9;
+        }
+            .input {
+                background-color: #388E3C;
+                border-radius: 50px;
+                padding: 0 24px;
+                box-sizing: border-box;
+                font-size: 20px;
+            }
+                .input::placeholder {
+                    color: #E8F5E9;
+                    opacity: 0.5;
+                }
+            .submit {
+                background-color: #1B5E20;
+                border-radius: 5px;
+                font-size: 22px;
+                font-weight: bold;
+                cursor: pointer;
+            }
+        .loginLine {
+            width: 76%;
+            height: 5px;
+            margin: 28px auto;
+            border-radius: 10px;
+            background: #558B2F;
+        }
+        .account {
+            font-size: 20px;
+            position: relative;
+            text-align: center;
+        }
+        .account a {color: #000;}
+
+.top {
+    position: relative;
+    top: 0;
+    width: 100%;
+    height: 80px;
+    background-color: white;
+    box-shadow: 1px 1px 7px rgb(190, 190, 190);
+}
+    .title {
+        display: inline-block;
+        width: 14%;
+        max-width: 255px;
+        height: 100%;
+        position: absolute;
+        left: 5%;
+        top: 0;
+        font-size: 30px;
+        line-height: 80px;
+        font-weight: bold;
+        z-index: 1;
+    }
+        .title img {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+    .menu_wrap {
+        width: 95%;
+        position: relative;
+        float: right;
+        margin-right: 5%;
+        text-align: right;
+    }
+        .menu {
+            display: inline-block;
+            font-size: 28px;
+            line-height: 80px;
+            font-weight: bold;
+        }
+            .menu + .menu {
+                margin-left: 3%;
+            }
+            .menu.menuOn {
+                color: #558B2F;
+            }
+
+.con {
+    background: #E0E0E0;
+}
+
+.profile {
+    display: inline-block;
+    width: 33.75%;
+    margin: 120px 4% 161px 3.75%;
+    vertical-align: top;
+}
+    .profile_tit {
+        width: 100%;
+        background: #1B5E20;
+        color: #fff;
+        font-size: 24px;
+        line-height: 50px;
+        text-align: center;
+        border-radius: 15px;
+    }
+        .nick {
+            font-weight: bold;
+        }
+    .profile_graph_wrap {
+        width: 100%;
+        position: relative;
+        margin-top: 40px;
+    }
+        .profile_graph_wrap {
+            content: '';
+            display: block;
+            width: 100%;
+            position: relative;
+            padding-top: 100%;
+        }
+        .profile_graph_btn {
+            display: block;
+            position: absolute;
+            left:4.5%;
+            z-index: 2;
+        }
+            .profile_graph_btn_now {
+                width: 20.8%;
+                top: 0;
+            }
+            .profile_graph_btn_before {
+                width: 26.4%;
+                top: 8%;
+            }
+            .profile_graph_btn .img_cover {
+                opacity: 0;
+            }
+                .profile_graph_btn.graphOn .img_cover {
+                    opacity: 1;
+                }
+        .profile_graph {
+            display: block;
+            width: 100%;
+            width: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+.info_wrap {
+    display: inline-block;
+    width: 53.125%;
+    margin: 155px 0 130px;
+    vertical-align: top;
+}
+    .lnb_wrap {
+        width: 94%;
+        margin-left: 6%;
+        font-size: 0;
+    }
+        .lnb {
+            display: inline-block;
+            width: 22.7%;
+            max-width: 232px;
+            margin-right: 10px;
+        }
+    .info_txt {
+        display: none;
+        width: 100%;
+        min-height: 400px;
+        position: relative;
+        padding: 30px 40px;
+        font-size: 24px;
+        line-height: 1.5;
+        border: solid 15px;
+        border-radius: 40px;
+        box-sizing: border-box;
+        background: #fff;
+    }
+        .info0 .info_txt0 {
+            min-height: 500px;
+            font-size: 20px;
+            line-height: 1.8;
+            display: block;
+            border-color: #81C784;
+        }
+            .info0 .info_txt0 strong {
+                margin-right: 10px;
+                font-size: 24px;
+            }
+        .info1 .info_txt1 {
+            display: block;
+            border-color: #81C784;
+        }
+        .info2 .info_txt2 {
+            display: block;
+            border-color: #EF5350;
+        }
+        .info3 .info_txt3 {
+            display: block;
+            border-color: #FFB300;
+        }
+        .info_txt li {
+            list-style: none;
+        }
+        .btn_info_edit {
+            position: absolute;
+            right: 40px;
+            bottom: 30px;
+            padding: 0 20px;
+            font-weight: bold;
+            font-size: 20px;
+            line-height: 42px;
+            border-radius: 12px;
+            background: #388E3C;
+            color: #fff;
+        }
+        .info_input {
+            font-size: 20px;
+            border-radius: 12px;
+            border:solid 3px #C8E6C9;
+            padding: 5px 20px;
+            box-sizing: border-box;
+        }
+
+.footer {
+    width: 100%;
+    position: relative;
+    padding: 20px 5%;
+    box-sizing: border-box;
+    text-align: right;
+    background: #424242;
+    color: #fff;
+}
+    .footer_member {
+        position: absolute;
+        left: 5%;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 14px;
+        line-height: 1.6;
+        text-align: left;
+    }
+    .footer_copy {
+        font-size: 20px;
+        line-height: 1.4;
+        position: relative;
+        margin-bottom: 50px;
+    }
+    .footer_logo {
+        display: inline-block;
+        width: 14%;
+        max-width: 255px;
+        position: relative;
+    }
+
+.chart {
+    display: inline-block;
+    width: 33.75%;
+    margin: 120px 4% 161px 3.75%;
+    vertical-align: top;
+}
+.mylog .chart {
+    text-align: right;
+}
+    .mylog .chart li {
+        display: block;
+        width: 100%;
+        margin: 0 auto;
+        box-sizing: border-box;
+        background: #F5F5F5 url('./img/mylog_arw_right.png') no-repeat 94% center;
+        background-size: 4%;
+        box-shadow: 0 0 10px rgba(0,0,0,0.25);
+        text-align: left;
+        border-radius: 100px;
+        overflow: hidden;
+    }
+    .mylog .chart li + li {
+        margin-top: 20px;
+    }
+        .mylog_btn {
+            display: block;
+            width: 100%;
+            padding: 15px 26px;
+            font-size: 18px;
+            text-align: left;
+        }
+        .mylog_btn .log_date {
+            font-weight: bold;
+        }
+    .mylog .btn_log_add {
+        position: relative;
+        left: 0;
+        top: 0;
+        margin-top: 30px;
+    }
+    .info_txt {
+        display: none;
+        width: 100%;
+        min-height: 400px;
+        position: relative;
+        padding: 30px 40px;
+        font-size: 24px;
+        line-height: 1.5;
+        border: solid 15px;
+        border-radius: 40px;
+        box-sizing: border-box;
+        background: #fff;
+    }
+        .info0 .info_txt0 {
+            line-height: 1.8;
+            display: block;
+            border-color: #C8E6C9;
+        }
+        .info_txt li {
+            list-style: none;
+        }
+        .btn_log_add {
+            position: absolute;
+            right: 40px;
+            bottom: 30px;
+            padding: 0 20px;
+            font-weight: bold;
+            font-size: 20px;
+            line-height: 42px;
+            border-radius: 12px;
+            background: #388E3C;
+            color: #fff;
+        }
+
+.chart_con {
+    display: inline-block;
+    width: 53.125%;
+    margin: 155px 0 130px;
+    vertical-align: top;
+}
+    .chart_con .info_txt0 {
+        padding-bottom: 90px;
+    }
+    .mylog .chart_con, .community .chart_con {
+        margin: 120px 0 161px;
+    }
+    .mylog .chart_con .info_txt {
+        min-height: 430px;
+    }
+        .mylog_tit {
+            font-size: 24px;
+            color: #388E2C;
+            font-weight: 400;
+        }
+            .mylog_tit .log_date {
+                font-weight: bold;
+            }
+        .mylog_txt {
+            margin-top: 10px;
+            font-size: 19px;
+            line-height: 1.4;
+        }
+    .info_txt {
+        display: none;
+        width: 100%;
+        min-height: 400px;
+        position: relative;
+        padding: 30px 40px;
+        font-size: 24px;
+        line-height: 1.5;
+        border: solid 15px;
+        border-radius: 40px;
+        box-sizing: border-box;
+        background: #fff;
+    }
+        .info0 .info_txt0 {
+            line-height: 1.8;
+            display: block;
+            border-color: #C8E6C9;
+        }
+        .info_txt li {
+            list-style: none;
+        }
+        .btn_info_edit {
+            position: absolute;
+            right: 40px;
+            bottom: 30px;
+            padding: 0 20px;
+            font-weight: bold;
+            font-size: 20px;
+            line-height: 42px;
+            border-radius: 12px;
+            background: #388E3C;
+            color: #fff;
+        }
+        .btn_mylog_edit {
+            right: 130px;
+            background: #616161;
+        }
+        .btn_mylog_delete {
+            background: #FF7043;
+        }
+        .community_list_wrap {
+            height: 350px;
+            overflow-y: scroll;
+            text-align: center;
+            font-size: 0;
+            margin-bottom: 15px;
+        }
+            .community_list {
+                display: inline-block;
+                width: 28%;
+                height: 150px;
+                border:solid 5px #66BB6A;
+                font-size: 15px;
+                font-weight: bold;
+                text-align: center;
+                vertical-align: top;
+                margin-top: 20px;
+                border-radius: 50px 0 50px 0;
+                padding: 20px 2%;
+                box-sizing: border-box;
+                overflow: hidden;
+            }
+                .community_list:nth-child(3n + 1), .community_list:nth-child(3n + 2) {
+                    margin-right: 4%;
+                }
+                .community_list.on {
+                    border:solid 5px #388E3C;
+                    background-color: #C8E6C9;
+                }
+                .chat_target {
+                    display: block;
+                    position: absolute;
+                    left: 5%;
+                    top: -1px;
+                    transform: translateY(-100%);
+                    background-color: #C8E6C9;
+                    border-radius: 20px 20px 0 0;
+                    padding: 10px 20px;
+                    font-size: 20px;
+                    font-weight: bold;
+                }
+                .chat_nickname {display: block;}
+                .chat_wrap {height: 350px; overflow-y: scroll;}
+                    .chat_wrap li {
+                        width:76%;
+                        padding: 15px 24px;
+                        box-sizing: border-box;
+                        font-size: 16px;
+                        border-radius: 20px;
+                    }
+                    .chat_wrap li + li{
+                        margin-top: 15px;
+                    }
+                    .chat_wrap li .chat_nickname {font-size: 17px; font-weight: bold;}
+                .chat_other {background-color: #EEEEEE;}
+                .chat_my {margin-left:22%; background-color: #C8E6C9; text-align: right;}
+                .chat_input_wrap {
+                    display: block;
+                    width: 90%;
+                    position: absolute;
+                    left: 5%;
+                    bottom: 25px;
+                }
+                    .chat_input {
+                        display: block;
+                        width: 100%;
+                        position: relative;
+                        font-size: 17px;
+                        line-height: 1.4;
+                        border-radius: 50px;
+                        background-color: #E8F5E9;
+                        padding: 8px 50px 8px 30px;
+                        box-sizing: border-box;
+                        box-shadow: 5px 5px 10px rgba(0,0,0,0.1);
+                    }
+                    .chat_send_btn {
+                        position: absolute;
+                        right: 5px;
+                        top: 0;
+                        width: auto;
+                        height: 100%;
+                    }
+                        .chat_send_btn img {display: block; width: auto; height: 100%;}
+.myPage_chat .chat_wrap {
+    height: 270px;
+}
+    .myPage_chat .chat_wrap .chat_my {
+        background-color: rgb(255, 206, 116);
+    }
+    .myPage_chat .chat_input_wrap .chat_input {
+        background-color: rgb(255, 238, 205);
+    }
