@@ -84,7 +84,11 @@ class MyLog extends Component {
         fetch("/api/getMyLogList",{
             method: "POST"
         }).then(response=>response.json())
-        .then(response=>console.log(response[0]));
+        .then(response=>{
+            this.setState({
+                log:response
+            })
+        });
 
         this.handleLogButton = this.handleLogButton.bind(this);
         this.changeVisible = this.changeVisible.bind(this);

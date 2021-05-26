@@ -48,7 +48,7 @@ router.post('/signup',(req,res)=>{
 
 router.get('/logout',(req,res)=>{
     req.session.destroy();
-    res.redirect('/')
+    res.redirect(req.baseUrl);
 })
 
 router.post('/getMyInfo',(req,res)=>{
@@ -63,7 +63,7 @@ router.post('/getMyInfo',(req,res)=>{
                 }
             }
             res.send(JSON.stringify(result));
-        });
+        }).catch();
     } else {
         res.json({isLogined: false});
     }
@@ -98,15 +98,6 @@ router.post('/getMylogList',(req,res)=>{
         res.json({isLogined: false});
     }
 });
-
-router.get('/makelog',(req,res)=>{
-    models.user_log.create({
-        user_id: "test",
-        amount: "1-9개비",
-        inhalation: "얕게 흡입",
-        type: "연초"
-    })
-})
 
 router.post('/viewMyLog',(req,res)=>{
     const {id} = req.body;
@@ -239,7 +230,18 @@ async function addMyLog(userid,data){
         amount: data.amount,
         inhalation: data.inhalation,
         type: data.type
-    })
+    });
+
+    let addScore = 0;
+    if (data.amount == "1-9개비"){
+        addScore += 10;
+    } else if (data.amount == "10-19개비"){
+        addScore += 5;
+    }
+
+    if (data.type == "전자 담배"){
+        addScore += 10
+    }
 }
 
 async function updateMyLog(userid,data){
