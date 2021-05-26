@@ -225,6 +225,9 @@ a:link, a:visited { color: #000;}
                 width: 80%;
                 margin: 0 auto;
             }
+            .profile_graph .score {
+                font-size: 25px;
+            }
 
 .info_wrap {
     display: inline-block;
@@ -342,6 +345,15 @@ a:link, a:visited { color: #000;}
 .mylog .chart {
     text-align: right;
 }
+    .info0 .chart_wrap {
+        min-height: auto;
+        height: 470px;
+    }
+    .chart_list {
+        height:250px;
+        overflow-y: scroll;
+        padding: 18px;
+    }
     .mylog .chart li {
         display: block;
         width: 100%;

@@ -86,7 +86,7 @@ class MyLog extends Component {
         .then(response=>{
             if(response.length !== 0){
                 this.setState({
-                    log:response
+                    log: response,
                 })
             }
         });
@@ -95,6 +95,7 @@ class MyLog extends Component {
         this.changeVisible = this.changeVisible.bind(this);
         this.handleRadio = this.handleRadio.bind(this);
         this.handleAddButton = this.handleAddButton(this);
+        this.handleDeleteButton = this.handleDeleteButton.bind(this);
     } 
 
     changeVisible(number){
@@ -173,7 +174,7 @@ class MyLog extends Component {
                 </div>
             )
         }
-        else return <div><button type="button" className="btn_info_edit btn_mylog_delete">삭제</button></div>
+        else return <div><button onClick={this.handleDeleteButton.bind(this)} type="button" className="btn_info_edit btn_mylog_delete">삭제</button></div>
     }
 
     renderLogList(){
@@ -191,12 +192,33 @@ class MyLog extends Component {
         return logs
     }
 
+    handleDeleteButton(e){
+        console.log(this.state);
+        fetch("/api/deleteMyLog",{
+            method: "post",
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            body: new URLSearchParams({
+                "id": this.state.log[this.state.selectedLog].id,
+            })
+        })
+        fetch("/api/getMyLogList",{
+            method: "POST"
+        }).then(response=>response.json())
+        .then(response=>{
+            if(response.length !== 0){
+                this.setState({
+                    log: response,
+                })
+            }
+        });
+    }
+
     render(){
         return (
             <div className="con mylog">
                 <div className="info0 chart">
-                    <div className="info_txt info_txt0">
-                        <ul>
+                    <div className="info_txt info_txt0 chart_wrap">
+                        <ul class="chart_list">
                             { this.renderLogList() }
                         </ul>
                         <button type="button" className="btn_log_add" onClick={this.handleAddButton}>추가</button>

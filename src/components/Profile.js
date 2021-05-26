@@ -7,7 +7,6 @@ import graph_off from '../img/graph_off.png';
 import character_good from '../img/character_good.png?v=1';
 import character_bad from '../img/character_bad.png?v=1';
 import character_soso from '../img/character_soso.png?v=1';
-import { json } from 'body-parser';
 
 const options = {
     legend: {
@@ -45,16 +44,32 @@ class Profile extends Component {
         super(props);
         this.state = {
             visible: 0,
+            log: [],
             score: 0,
         }
         fetch("/api/getMyScore",{
             method: "POST"
         }).then(response=>response.json())
-            .then(json => {
-                this.setState({
-                    score: json.score,
-                })
+        .then(json => {
+            this.setState({
+                score: json.score,
             })
+        });
+
+        fetch("/api/getMyLogList",{
+            method: "POST"
+        }).then(response=>response.json())
+        .then(response=>{
+            if(response.length !== 0){
+                this.setState({
+                    log:response
+                })
+            }
+        });
+        fetch("/api/getMyLogList",{
+            method: "POST"
+        }).then(response=>response.json())
+        .then(response=>console.log(response));
         this.changeVisible = this.changeVisible.bind(this);
     } 
 
@@ -71,6 +86,7 @@ class Profile extends Component {
                 return (
                     <div className="profile_graph">
                         <img src={character_good} alt="good" className="img_base"/>
+                        <p className="score"><strong>점수: </strong>{this.state.score}</p>
                     </div>
                 )
             }
@@ -78,6 +94,7 @@ class Profile extends Component {
                 return (
                     <div className="profile_graph">
                         <img src={character_soso} alt="soso" className="img_base"/>
+                        <p className="score"><strong>점수: </strong>{this.state.score}</p>
                     </div>
                 )
             }
@@ -85,6 +102,7 @@ class Profile extends Component {
                 return (
                     <div className="profile_graph">
                         <img src={character_bad} alt="bad" className="img_base"/>
+                        <p className="score"><strong>점수: </strong>{this.state.score}</p>
                     </div>
                 )
             }
@@ -122,7 +140,6 @@ class Profile extends Component {
                     </button>
                     {this.renderContent()}
                 </div>
-                    <p><strong>점수: </strong>{this.state.score}</p>
             </div>
         )
     }
