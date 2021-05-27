@@ -47,7 +47,13 @@ cron.schedule('* 0 * * *',()=>{
 });
 
 router.post('/getMyNickname',(req,res)=>{
-    
+    models.member.findOne({
+        attributes : ['username'],
+        raw: true,
+        where :{ user_id : req.session.userid}
+    }).then((data)=>{
+        res.json({nickname:data.username});
+    })
 })
 
 router.post('/login',(req,res)=>{
