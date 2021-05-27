@@ -46,6 +46,10 @@ cron.schedule('* 0 * * *',()=>{
     });
 });
 
+router.post('/getMyNickname',(req,res)=>{
+    
+})
+
 router.post('/login',(req,res)=>{
     const {userid, password} = req.body;
     login(userid,password).then((result)=>{

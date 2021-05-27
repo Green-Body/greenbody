@@ -8,8 +8,8 @@ function Join(props) {
                 <form className="inputLogin" action="/api/signup" method="POST">
                     <input className="formLogin input" type="text" name="userid" placeholder="Enter ID"/>
                     <input className="formLogin input" type="text" name="nickname" placeholder="Enter NickName"/>
-                    <input className="formLogin input" type="text" name="password" placeholder="Enter Password"/>
-                    <input className="formLogin input" type="text" placeholder="Confirm Password"/>
+                    <input className="formLogin input" type="password" name="password" placeholder="Enter Password"/>
+                    <input className="formLogin input" type="password" name="cfPassword" placeholder="Confirm Password"/>
                     <input className="formLogin submit" type="submit" value="Sign up"/>
                 </form>
             </div>

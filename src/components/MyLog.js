@@ -226,9 +226,9 @@ class MyLog extends Component {
             method: "post",
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
             body: new URLSearchParams({
-                "amount": this.state.log[this.state.selectedLog].amount,
-                "inhalation": this.state.log[this.state.selectedLog].inhalation,
-                "type": this.state.log[this.state.selectedLog].type,
+                "amount": this.state.log[this.state.selectedLog].smoke_amount,
+                "inhalation": this.state.log[this.state.selectedLog].smoke_degree,
+                "type": this.state.log[this.state.selectedLog].smoke_type,
             })
         })
         fetch("/api/getMyLogList",{
