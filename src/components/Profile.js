@@ -46,6 +46,7 @@ class Profile extends Component {
             visible: 0,
             log: [],
             score: 0,
+            nickname: '',
         }
         fetch("/api/getMyScore",{
             method: "POST"
@@ -53,6 +54,15 @@ class Profile extends Component {
         .then(json => {
             this.setState({
                 score: json.score,
+            })
+        });
+
+        fetch("/api/getMyNickname",{
+            method: "POST"
+        }).then(response=>response.json())
+        .then(json => {
+            this.setState({
+                nickname: json.nickname,
             })
         });
 
@@ -66,6 +76,7 @@ class Profile extends Component {
                 })
             }
         });
+
         fetch("/api/getMyLogList",{
             method: "POST"
         }).then(response=>response.json())
@@ -128,7 +139,7 @@ class Profile extends Component {
     render(){
         return (
             <div className="profile">
-                <div className="profile_tit"><span className="nick">User1</span>'s body profile</div>
+                <div className="profile_tit"><span className="nick">{this.state.nickname}</span>'s body profile</div>
                 <div className="profile_graph_wrap">
                     <button type="button" className={"profile_graph_btn profile_graph_btn_now graph"+(this.state.visible == 0? "On" : "Off")}>
                         <img onClick={this.changeVisible.bind(this, 0)} src={character_off} alt="Now" className="img_base"/>
