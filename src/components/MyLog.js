@@ -96,6 +96,8 @@ class MyLog extends Component {
         this.handleRadio = this.handleRadio.bind(this);
         this.handleAddButton = this.handleAddButton(this);
         this.handleDeleteButton = this.handleDeleteButton.bind(this);
+        this.handleAdd = this.handleAdd.bind(this);
+        this.handleConfirm = this.handleConfirm.bind(this);
     } 
 
     changeVisible(number){
@@ -162,7 +164,7 @@ class MyLog extends Component {
             return (
                 <div>
                     <button 
-                        onClick={this.changeVisible.bind(this, 1)} 
+                        onClick={this.handleConfirm.bind(this)} 
                         type="button" 
                         className="btn_info_edit btn_mylog_edit">
                         확인
@@ -215,6 +217,33 @@ class MyLog extends Component {
         });
     }
 
+    handleAdd(e){
+        this.changeVisible(0);
+    }
+
+    handleConfirm(e){
+        fetch("/api/addMyLog",{
+            method: "post",
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            body: new URLSearchParams({
+                "amount": this.state.log[this.state.selectedLog].amount,
+                "inhalation": this.state.log[this.state.selectedLog].inhalation,
+                "type": this.state.log[this.state.selectedLog].type,
+            })
+        })
+        fetch("/api/getMyLogList",{
+            method: "POST"
+        }).then(response=>response.json())
+        .then(response=>{
+            if(response.length !== 0){
+                this.setState({
+                    log: response,
+                })
+            }
+        });
+        this.changeVisible(1);
+    }
+
     render(){
         return (
             <div className="con mylog">
@@ -223,7 +252,7 @@ class MyLog extends Component {
                         <ul class="chart_list">
                             { this.renderLogList() }
                         </ul>
-                        <button type="button" className="btn_log_add" onClick={this.handleAddButton}>추가</button>
+                        <button type="button" className="btn_log_add" onClick={this.handleAdd.bind(this)}>추가</button>
                     </div>
                 </div>
     
