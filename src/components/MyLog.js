@@ -5,7 +5,7 @@ var audit = '';
 function Adit(props){
     return (
         <div>
-            <h3 className="mylog_tit"><span className="log_date">{props.adit.date}</span> 일지</h3>
+            <h3 className="mylog_tit"><span className="log_date">새로운 일지</span></h3>
             <div className="mylog_txt">
                 <ul>
                     <li>
