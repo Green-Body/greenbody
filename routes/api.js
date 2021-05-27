@@ -47,13 +47,18 @@ cron.schedule('* 0 * * *',()=>{
 });
 
 router.post('/getMyNickname',(req,res)=>{
-    models.member.findOne({
-        attributes : ['username'],
-        raw: true,
-        where :{ user_id : req.session.userid}
-    }).then((data)=>{
-        res.json({nickname:data.username});
-    })
+    if (req.session.userid){
+        models.member.findOne({
+            attributes : ['username'],
+            raw: true,
+            where :{ user_id : req.session.userid}
+        }).then((data)=>{
+            res.json({nickname:data.username});
+        })
+    } else {
+        res.json({isLogined: false});
+    }
+    
 })
 
 router.post('/login',(req,res)=>{
